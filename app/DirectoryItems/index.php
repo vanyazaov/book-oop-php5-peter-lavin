@@ -11,17 +11,17 @@
         // требуем файл, содержащий определение класса
         require 'DirectoryItems.php';
         // в PHP5 объекты передаются по ссылке по умолчанию, синтаксис  =& излишен.
-        $di = new DirectoryItems('graphics');
+        $di = new DirectoryItems('graphics', '-');
         // убеждаемся, что все файлы в каталоге - изображения
-        $di->checkAllImages()or die('Не все файлы графические.');
+        $di->checkAllImages() or die('Не все файлы графические.');
         // сортируем имена без учета регистра
         $di->naturalCaseInsensitiveOrder();
         // получаем массив
         $filearray = $di->getFileArray();
         echo "<div style=\"text-align:center;\">";
         // перебираем массив и выводим собранные данные
-        foreach ($filearray as $value){
-	        echo "<img src=\"graphics/$value\" /><br />file name: $value<br />\n";
+        foreach ($filearray as $key => $value){
+	        echo "<img src=\"graphics/$key\" /><br />Title: $value<br />\n";
         }
         echo "</div><br />";
     ?>
