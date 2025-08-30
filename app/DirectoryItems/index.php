@@ -10,8 +10,11 @@
     <?php
         require 'DirectoryItems.php';
         $di =& new DirectoryItems('graphics');
+        $di->checkAllImages() or die('Не все файлы графические.');
         $di->naturalCaseInsensitiveOrder();
-        var_dump($di, $di->getCount());
+        // получаем массив
+        $filearray = $di->getFileArray();
+        var_dump($filearray);
     ?>
 </body>
 </html>

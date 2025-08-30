@@ -37,5 +37,24 @@ class DirectoryItems
 	}
 	function getCount() {
 		return count($this->filearray);
-	}		
+	}
+	// метод, проверяющий, что все файлы содержат изображения
+	function checkAllImages(){
+		$bln=true;
+		$extension='';
+		$types= array('jpg', 'jpeg', 'gif', 'png');
+		foreach ($this->filearray as $value){
+			$extension = substr($value,(strpos($value, ".")+1));
+			$extension = strtolower($extension);
+			if(!in_array($extension, $types)){
+				$bln = false;
+				break;
+			}
+		}
+		return $bln;
+	}
+	// метод, отдающий собранный массив данных
+	function getFileArray(){
+		return $this->filearray;
+	}			
 }
