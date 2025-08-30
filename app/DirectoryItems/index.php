@@ -10,7 +10,8 @@
     <?php
         require 'DirectoryItems.php';
         $di =& new DirectoryItems('graphics');
-        var_dump($di);
+        $di->naturalCaseInsensitiveOrder();
+        var_dump($di, $di->getCount());
     ?>
 </body>
 </html>

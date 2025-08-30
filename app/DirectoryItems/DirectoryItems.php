@@ -24,5 +24,18 @@ class DirectoryItems
 			//error
 			die('Следует передать имя каталога.');
 		}
-	}	
+	}
+	////////////////////////////////////////////////////////////////////
+	//public functions 
+	////////////////////////////////////////////////////////////////////
+	// обертывающие методы (методы для доступа к уже имеющимся функциям PHP)
+	function indexOrder(){
+		sort($this->filearray);
+	}
+	function naturalCaseInsensitiveOrder(){
+		natcasesort($this->filearray);
+	}
+	function getCount() {
+		return count($this->filearray);
+	}		
 }
