@@ -1,13 +1,13 @@
 <?php 
-
+// везде добавляем модификаторы доступа public/private
 class DirectoryItems 
 {
 	// переменная экземпляра/член данных/свойство
-	var $filearray = array();
-	////////////////////////////////////////////////////////////////////
-	//constructor
-	////////////////////////////////////////////////////////////////////
-	function DirectoryItems($directory){ // в качестве параметра принимает строковую переменную
+	// используем модификаторы доступа, появившиеся в PHP5 и закрываем свойства класса от внешних изменений.
+	private $filearray = array();
+
+	// Используем для конструктора волшебный метод вместо имени класса.
+	public function __construct($directory){ // в качестве параметра принимает строковую переменную
 		$d = '';
 		if(is_dir($directory))
 		{
@@ -16,7 +16,7 @@ class DirectoryItems
 			{
 				if(is_file("$directory/$f"))
 				{
-					$this->filearray[]=$f; // используем $this-> для доступа к свойству текущего объекта
+					$this->filearray[]=$f;
 				}
 			}
 			closedir($d);
@@ -25,21 +25,19 @@ class DirectoryItems
 			die('Следует передать имя каталога.');
 		}
 	}
-	////////////////////////////////////////////////////////////////////
-	//public functions 
-	////////////////////////////////////////////////////////////////////
+
 	// обертывающие методы (методы для доступа к уже имеющимся функциям PHP)
-	function indexOrder(){
+	public function indexOrder(){
 		sort($this->filearray);
 	}
-	function naturalCaseInsensitiveOrder(){
+	public function naturalCaseInsensitiveOrder(){
 		natcasesort($this->filearray);
 	}
-	function getCount() {
+	public function getCount() {
 		return count($this->filearray);
 	}
 	// метод, проверяющий, что все файлы содержат изображения
-	function checkAllImages(){
+	public function checkAllImages(){
 		$bln=true;
 		$extension='';
 		$types= array('jpg', 'jpeg', 'gif', 'png');
@@ -54,7 +52,7 @@ class DirectoryItems
 		return $bln;
 	}
 	// метод, отдающий собранный массив данных
-	function getFileArray(){
+	public function getFileArray(){
 		return $this->filearray;
 	}			
 }
