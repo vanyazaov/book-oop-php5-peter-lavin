@@ -30,6 +30,37 @@ class ThumbnailImage
 			default:
 				die("Не удалось создать изображение.");
 		}
-		//$this->createThumb($thumbnailsize);
+		$this->createThumb($thumbnailsize);
+	}
+	
+	private function createThumb($thumbnailsize){
+		// элементы массива
+		$srcW = $this->imageproperties[0];
+		$srcH = $this->imageproperties[1];
+		// корректировать только если размер больше миниатюры
+		if($srcW > $thumbnailsize || $srcH > $thumbnailsize) {
+			$reduction = $this->calculateReduction($thumbnailsize);
+			// получить пропорции
+      		$desW = $srcW/$reduction;
+      		$desH = $srcH/$reduction;								
+			$copy = imagecreatetruecolor($desW, $desH);			
+			imagecopyresampled($copy,$this->image,0,0,0,0,$desW, $desH, $srcW, $srcH)
+				 or die ("Копирование изображения не удалось.");			
+			// уничтожить оригинал
+			imagedestroy($this->image);
+			$this->image = $copy;			
+		}
+	}
+	
+	private function calculateReduction($thumbnailsize){
+		$srcW = $this->imageproperties[0];
+		$srcH = $this->imageproperties[1];
+		// вычисление коэф. масшабирования
+      	if($srcW < $srcH){
+      		$reduction = round($srcH/$thumbnailsize);
+      	}else{  			
+      		$reduction = round($srcW/$thumbnailsize);
+      	}
+		return $reduction;
 	}
 }
