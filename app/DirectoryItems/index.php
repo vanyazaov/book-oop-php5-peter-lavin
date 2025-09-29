@@ -10,21 +10,25 @@
     <?php
         // требуем файл, содержащий определение класса
         require 'DirectoryItems.php';
+        $directory = 'graphics';
         // в PHP5 объекты передаются по ссылке по умолчанию, синтаксис  =& излишен.
-        $di = new DirectoryItems('graphics', '-');
+        $di = new DirectoryItems($directory, '-');
         // убеждаемся, что все файлы в каталоге - изображения
-        if(!$di->checkAllImages()){
-            // Если не так, то оставляем только изображения
-	        $di->imagesOnly();
-        }
+        $di->imagesOnly();
         // сортируем имена без учета регистра
         $di->naturalCaseInsensitiveOrder();
         // получаем массив
         $filearray = $di->getFileArray();
         echo "<div style=\"text-align:center;\">";
+        echo "Нажмите на имя файла, чтобы просмотреть полную версию.<br />";
         // перебираем массив и выводим собранные данные
+        $size = 100;  
         foreach ($filearray as $key => $value){
-	        echo "<img src=\"graphics/$key\" /><br />Title: $value<br />\n";
+            $path = "$directory/".$key;
+             
+	        echo "<img src=\"getthumb.php?path=$path&amp;size=$size\" 
+	             style=\"border:1px solid black;margin-top:20px;\" 
+	             alt= \"$value\"/><br> <a href=\"$path\" target=\"_blank\">Title: $value</a><br />\n";
         }
         echo "</div><br />";
     ?>

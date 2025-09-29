@@ -1,6 +1,13 @@
 <?php
-//this file will be the src for an img tag
+// этот файл будет источником для тега img
 require 'ThumbnailImage.php';
 
-$thumb = new ThumbNailImage('graphics/Picture-010.jpg', 500);	
-$thumb->getImage();
+$path = @$_GET["path"];
+$maxsize = (int) @$_GET["size"];
+if(!$maxsize){
+	$maxsize=100;
+}
+if(isset($path)){
+  $thumb = new ThumbNailImage($path, $maxsize);	
+  $thumb->getImage();
+}

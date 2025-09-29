@@ -13,7 +13,7 @@ class DirectoryItems
 	// Модифицируем конструктор, добавив новый параметр, 
 	// по которому будем определять символ в имени файла для замены на пробел
 	// по умолчанию, это будет "_"
-	public function __construct($directory, $replacechar = "_") {
+	public function __construct($directory, $replacechar = "-") {
 	    // производим инициализацию свойств объекта переданными значениями
 		$this->directory = $directory;
 		$this->replacechar = $replacechar;
