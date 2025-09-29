@@ -5,6 +5,7 @@ RUN echo "deb http://archive.debian.org/debian/ jessie main" > /etc/apt/sources.
 
 RUN apt-get update -o Acquire::Check-Valid-Until=false \
  && apt-get install -y --allow-unauthenticated libmysqlclient-dev ca-certificates wget \
+        libpng12-dev libjpeg-dev libfreetype6-dev \
  && update-ca-certificates --fresh
 
 # Создаём директорию для конфигов PHP
@@ -30,6 +31,13 @@ RUN cd /usr/src/php/ext/zip \
  && ./configure \
  && make && make install \
  && echo "extension=zip.so" > /usr/local/etc/php/conf.d/zip.ini
+ 
+ # gd
+RUN cd /usr/src/php/ext/gd \
+ && phpize \
+ && ./configure --with-gd --with-freetype-dir=/usr --with-png-dir=/usr --with-jpeg-dir=/usr \
+ && make && make install \
+ && echo "extension=gd.so" > /usr/local/etc/php/conf.d/gd.ini
 
 
 # Рабочая директория
