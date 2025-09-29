@@ -2,7 +2,6 @@
 //this file will be the src for an img tag
 require 'ThumbnailImage.php';
 
-$thumb = new ThumbNailImage('graphics/Picture-010.jpg', 250);	
+$thumb = new ThumbNailImage('graphics/Picture-010.jpg');	
 
-var_dump($thumb); die;
-?>
+$thumb->getImage();

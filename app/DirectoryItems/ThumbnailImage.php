@@ -33,6 +33,30 @@ class ThumbnailImage
 		$this->createThumb($thumbnailsize);
 	}
 	
+	public function __destruct(){
+		if(isset($this->image)){
+			imagedestroy($this->image);			
+		}
+	}
+	
+	// вывод изображения
+	public function getImage(){	
+		header("Content-type: $this->mimetype");
+		switch($this->imageproperties[2]){
+			case IMAGETYPE_JPEG:
+				imagejpeg($this->image,null,$this->quality);
+				break;
+			case IMAGETYPE_GIF:
+				imagegif($this->image);
+				break;
+			case IMAGETYPE_PNG:
+				imagepng($this->image);
+				break;
+			default:
+				die("Не удалось создать изображение..");
+		}
+	}
+	
 	private function createThumb($thumbnailsize){
 		// элементы массива
 		$srcW = $this->imageproperties[0];
@@ -43,12 +67,12 @@ class ThumbnailImage
 			// получить пропорции
       		$desW = $srcW/$reduction;
       		$desH = $srcH/$reduction;								
-			$copy = imagecreatetruecolor($desW, $desH);			
+			$copy = imagecreatetruecolor($desW, $desH);						
 			imagecopyresampled($copy,$this->image,0,0,0,0,$desW, $desH, $srcW, $srcH)
 				 or die ("Копирование изображения не удалось.");			
 			// уничтожить оригинал
 			imagedestroy($this->image);
-			$this->image = $copy;			
+			$this->image = $copy;		
 		}
 	}
 	
