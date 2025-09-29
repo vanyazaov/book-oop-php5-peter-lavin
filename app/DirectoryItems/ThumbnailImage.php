@@ -57,6 +57,31 @@ class ThumbnailImage
 		}
 	}
 	
+	public function getMimeType(){
+		return $this->mimetype;
+	}
+	
+	public function getQuality(){
+		$quality = null;
+		if($this->imageproperties[2] == IMAGETYPE_JPEG){
+			$quality = $this->quality;
+		}
+		return $quality;
+	}
+	
+	public function setQuality($quality){
+		if($quality > 100 || $quality  <  1){
+			$quality = 75;
+        }
+		if($this->imageproperties[2] == IMAGETYPE_JPEG){
+			$this->quality = $quality;
+		}
+	}
+	
+	public function getInitialFileSize(){	
+		return $this->initialfilesize;
+	}
+	
 	private function createThumb($thumbnailsize){
 		// элементы массива
 		$srcW = $this->imageproperties[0];
