@@ -41,6 +41,10 @@ class DirectoryItems
 		unset($this->filearray);
 	}
 	
+	public function getDirectoryName(){
+		return $this->directory;
+	}
+	
 	// обертывающие методы (методы для доступа к уже имеющимся функциям PHP)
 	public function indexOrder(){
 		sort($this->filearray);
@@ -51,6 +55,33 @@ class DirectoryItems
 	public function getCount() {
 		return count($this->filearray);
 	}
+	
+	// Метод исключает из массива все элементы, кроме указанного
+	public function filter($extension){
+		$extension = strtolower($extension);
+		foreach ($this->filearray as $key => $value)
+		{
+			$ext = substr($key,(strpos($key, ".")+1));
+			$ext =  strtolower($ext);
+			if($ext != $extension){
+				unset($this->filearray[$key]);
+			}
+		}
+	}
+	
+	// Метод, который удаляет фильтр пересоздавая исходный массив
+	public function removeFilter(){
+		unset($this->filearray);
+		$d = "";
+		$d = opendir($this->directory) or die("Не удалось открыть каталог.");
+		while(false !== ($f = readdir($d))){
+      		if(is_file("$this->directory/$f")){
+			    $title = $this->createTitle($f);
+			    $this->filearray[$f] = $title;
+      		}
+		}
+		closedir($d);
+	}	
 	
 	// метод, проверяющий, что все файлы содержат изображения
 	public function checkAllImages(){
@@ -66,6 +97,35 @@ class DirectoryItems
 			}
 		}
 		return $bln;
+	}
+	
+	// метод проверяет, что все файлы в каталоге с переданным расширением или возвращает false
+	public function checkAllSpecificType($extension){
+		$extension = strtolower($extension);
+		$bln = true;
+		$ext = "";
+		foreach ($this->filearray as $key => $value){
+			$ext = substr($key,(strpos($key, ".")+1));
+			$ext =  strtolower($ext);
+			if($extension != $ext){
+				$bln = false;
+				break;
+			}
+		}
+		return $bln;
+	}
+	
+	// Метод, который оставляет только графические файлы в списке
+	public function imagesOnly(){
+		$extension = "";
+		$types =  array("jpg", "jpeg", "gif", "png");
+		foreach ($this->filearray as $key => $value){
+			$extension = substr($key,(strpos($key, ".")+1));
+			$extension =  strtolower($extension);
+			if(!in_array($extension, $types)){
+				unset($this->filearray[$key]);
+			}
+		}	
 	}
 
 	// метод, отдающий собранный массив данных
