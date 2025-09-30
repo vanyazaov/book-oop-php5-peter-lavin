@@ -38,5 +38,13 @@ class PageNavigator
     private $strprevious = "Prev";
     private $strlast = "&gt;|";
     // Для сообщений об ошибках
-    private $errorstring;   
+    private $errorstring; 
+    
+    public function __construct($pagename, $totalrecords, $recordsperpage, $recordoffset, $maxpagesshown = 4, $params = ""){
+        $this->pagename = $pagename;
+        $this->recordsperpage = $recordsperpage;  
+        $this->maxpagesshown = $maxpagesshown;
+        // уже url-кодировано
+        $this->params = $params;
+    }  
 }
