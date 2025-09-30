@@ -46,5 +46,22 @@ class PageNavigator
         $this->maxpagesshown = $maxpagesshown;
         // уже url-кодировано
         $this->params = $params;
+        
+        // проверить, что recordoffset кратно recordsperpage
+        $this->checkRecordOffset($recordoffset, $recordsperpage) or
+          die($this->errorstring);
+    }
+    
+    // $recordoffset - где навигатор должен позиционироваться
+    // число выводимых записей на странице постоянно
+    // смещение должно быть кратно этой величине
+    private function checkRecordOffset($recordoffset, $recordsperpage)
+    {
+        $bln = true;
+        if($recordoffset%$recordsperpage != 0){
+          $this->errorstring = "Ошибка — не кратно числу записей на странице.";
+          $bln = false;  
+        }
+        return $bln;
     }  
 }
