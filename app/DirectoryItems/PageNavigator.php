@@ -50,6 +50,48 @@ class PageNavigator
         // проверить, что recordoffset кратно recordsperpage
         $this->checkRecordOffset($recordoffset, $recordsperpage) or
           die($this->errorstring);
+        $this->setTotalPages($totalrecords, $recordsperpage);
+        $this->calculateCurrentPage($recordoffset, $recordsperpage);
+        $this->createInactiveSpans();
+        $this->calculateCurrentStartPage();
+        $this->calculateCurrentEndPage();        
+    }
+    
+    // Вычисление номера конечной страницы
+    private function calculateCurrentEndPage(){
+        $this->currentendpage = $this->currentstartpage+$this->maxpagesshown;
+        if($this->currentendpage > $this->totalpages)
+        {
+          $this->currentendpage = $this->totalpages;
+        }
+    }
+    
+    // Вычисление номера начальной страницы
+    private function calculateCurrentStartPage(){
+        $temp = floor($this->currentpage/$this->maxpagesshown);
+        $this->currentstartpage = $temp * $this->maxpagesshown;
+    }
+    
+    // HTML-код для вывода ссылок Next, First, Previous, Last
+    private function createInactiveSpans(){
+        $this->spannextinactive = "<span class=\"".
+          "$this->inactivespanname\">$this->strnext</span>\n";
+        $this->lastinactivespan = "<span class=\"".
+          "$this->inactivespanname\">$this->strlast</span>\n";
+        $this->spanpreviousinactive = "<span class=\"".
+          "$this->inactivespanname\">$this->strprevious</span>\n";
+        $this->firstinactivespan = "<span class=\"".
+          "$this->inactivespanname\">$this->strfirst</span>\n";
+    }
+    
+    // Вычисление номера текущей страницы
+    private function calculateCurrentPage($recordoffset, $recordsperpage){
+        $this->currentpage = $recordoffset/$recordsperpage;
+    }
+    
+    // Вычисление общего количества страниц через округление с избытком
+    private function setTotalPages($totalrecords, $recordsperpage){
+        $this->totalpages = ceil($totalrecords/$recordsperpage);
     }
     
     // $recordoffset - где навигатор должен позиционироваться
