@@ -57,6 +57,48 @@ class PageNavigator
         $this->calculateCurrentEndPage();        
     }
     
+    // Устанавливает класс неактивного элемента
+    public function setInactiveSpanName($name){
+        $this->inactivespanname = $name;
+        // вызов функции для переименования span
+        $this->createInactiveSpans();  
+    }
+    
+    // Возвращает имя класса неактивного элемента
+    public function getInactiveSpanName(){
+        return $this->inactivespanname;
+    }
+    
+    // Устанавливает класс для оформления общего количества страниц
+    public function setPageDisplayDivName($name){
+        $this->pagedisplaydivname = $name;    
+    }
+    
+    // Возвращает класс для оформления общего количества страниц
+    public function getPageDisplayDivName(){
+        return $this->pagedisplaydivname;
+    }
+    
+    // Устанавливает класс оформления навигатора
+    public function setDivWrapperName($name){
+        $this->divwrappername = $name;    
+    }
+    
+    // Возвращает класс оформления навигатора
+    public function getDivWrapperName(){
+        return $this->divwrappername;
+    }
+    
+    // Устанавливает параметр смещения
+    public function setFirstParamName($name){
+        $this->firstparamname = $name;    
+    }
+    
+    // Возвращает параметр смещения
+    public function getFirstParamName(){
+        return $this->firstparamname;
+    }
+    
     // Вычисление номера конечной страницы
     private function calculateCurrentEndPage(){
         $this->currentendpage = $this->currentstartpage+$this->maxpagesshown;
