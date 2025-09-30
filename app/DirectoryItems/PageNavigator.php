@@ -1,0 +1,42 @@
+<?php
+/**
+Класс для навигации по нескольким страницам
+*/
+class PageNavigator
+{
+    // Имя страницы, содержащий навигатор
+    private $pagename;
+    // Общее число страниц для вывода
+    private $totalpages;
+    // Число записей на одной странице
+    private $recordsperpage;
+    // Максимальное число ссылок на другие страницы
+    private $maxpagesshown;
+    // Начало нумерации ссылок в блоке
+    private $currentstartpage;
+    // Конец нумерации ссылок в блоке
+    private $currentendpage;
+    // Номер текущей страницы
+    private $currentpage;
+    // HTML-код для неактивных ссылок "следующая" и "предыдущая"
+    private $spannextinactive;
+    private $spanpreviousinactive;
+    // HTML-код для неактивных ссылок "первая" и "последняя"
+    private $firstinactivespan;
+    private $lastinactivespan;
+    // для формирования строки запроса, должен соответствовать $_GET['offset'] на вызывающей странице
+    private $firstparamname = "offset";
+    // дополнительные параметры, использовать как пару "&имя=значение" для получения
+    private $params;
+    // CSS-классы для оформления постраничного навигатора
+    private $inactivespanname = "inactive";
+    private $pagedisplaydivname = "totalpagesdisplay";
+    private $divwrappername = "navigator";  
+    // Текстовые элементы навигации
+    private $strfirst = "|&lt;";
+    private $strnext = "Next";
+    private $strprevious = "Prev";
+    private $strlast = "&gt;|";
+    // Для сообщений об ошибках
+    private $errorstring;   
+}
